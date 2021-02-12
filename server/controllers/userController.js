@@ -3,6 +3,7 @@ const dbConnection = require('../database/dbConnection');
 const connection = dbConnection();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { use } = require('../routes/userRoutes');
 
 userController.login = (req, res) => {
   const {email, password} = req.body;
@@ -36,3 +37,25 @@ userController.login = (req, res) => {
     res.json({error: false, msg: 'You are now logged in'});
   })
 }
+
+userController.register = (req, res) => {
+  const {name, email, password} = req.body;
+  connection.query('SELECT email FROM users WHERE email = ?', [email], (error, result) => {
+    if(error) throw error;
+
+    if(result.length > 0) {
+      return res.json({error: true, msg: 'Email is already in use'});
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    connection.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, hashedPassword], (error) => {
+      if(error) throw error;
+
+      res.json({error: false, msg: 'New user created :D'});
+    })
+  });
+}
+
+module.exports = userController;
