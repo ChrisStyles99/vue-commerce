@@ -3,7 +3,6 @@ const dbConnection = require('../database/dbConnection');
 const connection = dbConnection();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { use } = require('../routes/userRoutes');
 
 userController.login = (req, res) => {
   const {email, password} = req.body;
