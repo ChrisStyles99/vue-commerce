@@ -39,7 +39,7 @@ userController.login = (req, res) => {
 
 userController.register = (req, res) => {
   const {name, email, password} = req.body;
-  connection.query('SELECT email FROM users WHERE email = ?', [email], (error, result) => {
+  connection.query('SELECT email FROM users WHERE email = ?', [email], async(error, result) => {
     if(error) throw error;
 
     if(result.length > 0) {

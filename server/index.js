@@ -26,6 +26,10 @@ connection.connect(error => {
   console.log('Database connected');
 });
 
+//Routes
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/products', require('./routes/productRoutes'));
+
 //PORT
 const PORT = process.env.PORT || 3000;
 
