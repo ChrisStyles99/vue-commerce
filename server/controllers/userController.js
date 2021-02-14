@@ -6,21 +6,21 @@ const jwt = require('jsonwebtoken');
 
 userController.login = (req, res) => {
   const {email, password} = req.body;
-  connection.query('SELECT email FROM users WHERE email = ?', [email], async(error, result) => {
+  connection.query('SELECT * FROM users WHERE email = ?', [email], async(error, result) => {
     if(error) throw error;
 
     if(result.length < 1) {
       return res.json({error: true, msg: 'Email does not exists'});
     }
 
-    const validPassword = await bcrypt.compare(password, user[0].password);
+    const validPassword = await bcrypt.compare(password, result[0].password);
 
     if(!validPassword) {
       return res.json({error: true, msg: 'Passwords does not match'});
     }
 
     const payload = {
-      id: user[0].id
+      id: result[0].id
     }
 
     const token = jwt.sign(payload, process.env.SECRET, {
@@ -47,7 +47,7 @@ userController.register = (req, res) => {
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     connection.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, hashedPassword], (error) => {
       if(error) throw error;
