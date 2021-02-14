@@ -6,6 +6,10 @@ productController.getAll = (req, res) => {
   connection.query('SELECT * FROM products', (error, results) => {
     if(error) throw error;
 
+    if(results.length < 1) {
+      return res.json({error: true, msg: 'No products available :('})
+    }
+
     res.json({error: false, products: results});
   });
 }
