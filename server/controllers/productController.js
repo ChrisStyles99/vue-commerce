@@ -27,4 +27,8 @@ productController.getSingle = (req, res) => {
   });
 }
 
+// productController.makeOrder = (req, res) => {
+  
+// }
+
 module.exports = productController;
