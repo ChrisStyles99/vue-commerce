@@ -22,6 +22,8 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    box-shadow: 2px 4px 8px rgba($color: #000000, $alpha: 1.0);
+    z-index: 3;
 
     .logo {
       .logo-link {
