@@ -17,7 +17,7 @@ productController.getAll = (req, res) => {
 productController.getSingle = (req, res) => {
   const {id} = req.params;
 
-  connection.query('SELECT * FROM products WHERE id = ?', (error, result) => {
+  connection.query('SELECT * FROM products WHERE id = ?', [id], (error, result) => {
     if(error) throw error;
     if(result.length < 1) {
       res.json({error: true, msg: 'No product with that id'});
