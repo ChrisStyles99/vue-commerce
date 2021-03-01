@@ -3,8 +3,8 @@
     <h3>Product name</h3>
     <img src="https://via.placeholder.com/200" alt="product image">
     <div class="btns">
-      <button>Add to cart</button>
-      <button>See details</button>
+      <button class="btn add">Add to cart</button>
+      <router-link class="btn link" to="/product/1">See details</router-link>
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
       display: flex;
       justify-content: space-between;
 
-      button {
+      .btn {
         padding: 5px;
         font-size: .9rem;
         cursor: pointer;
@@ -47,6 +47,7 @@ export default {
 
         &:last-child {
           background-color: $secondary;
+          text-decoration: none;
         }
 
         &:hover {
