@@ -36,6 +36,7 @@ export default {
         padding: 5px;
         cursor: pointer;
         border: none;
+        width: 20px;
 
         &:first-child {
           background-color: #4b55eb;

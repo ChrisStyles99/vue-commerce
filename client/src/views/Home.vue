@@ -23,9 +23,6 @@
     </div>
     <div class="home-categories">
       <CategoryCard :background="'#438b'" />
-      <CategoryCard :background="'#123adc'" />
-      <CategoryCard :background="'#abc123'" />
-      <CategoryCard />
     </div>
   </div>
 </template>
@@ -103,7 +100,7 @@ export default {
     padding: 20px 0;
     margin: auto;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 
   // svg {
