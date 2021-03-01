@@ -1,6 +1,8 @@
 <template>
   <div class="login">
-    <svg class="bg-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#103c42" fill-opacity="1" d="M0,320L40,309.3C80,299,160,277,240,229.3C320,181,400,107,480,90.7C560,75,640,117,720,133.3C800,149,880,139,960,154.7C1040,171,1120,213,1200,234.7C1280,256,1360,256,1400,256L1440,256L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"></path></svg>
+    <transition name="svg" appear>
+      <svg class="bg-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#103c42" fill-opacity="1" d="M0,320L40,309.3C80,299,160,277,240,229.3C320,181,400,107,480,90.7C560,75,640,117,720,133.3C800,149,880,139,960,154.7C1040,171,1120,213,1200,234.7C1280,256,1360,256,1400,256L1440,256L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"></path></svg>
+    </transition>
 
     <div class="login-card">
       <img src="https://images.pexels.com/photos/2304895/pexels-photo-2304895.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Login card Image">
@@ -95,5 +97,18 @@ export default {
         }
       }
     }
+  }
+
+  .svg-enter-from {
+    transform: translateY(-100px);
+  }
+
+  .svg-leave-to {
+    transform: translateY(-100px);
+  }
+
+  .svg-enter-active,
+  .svg-leave-active {
+    transition: all 0.3s ease-in;
   }
 </style>

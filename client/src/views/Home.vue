@@ -22,7 +22,14 @@
       </div>
     </div>
     <div class="home-categories">
-      <CategoryCard :background="'#438b'" />
+      <CategoryCard :background="randomColor()" />
+      <CategoryCard :background="randomColor()" />
+      <CategoryCard :background="randomColor()" />
+      <CategoryCard :background="randomColor()" />
+      <CategoryCard :background="randomColor()" />
+      <CategoryCard :background="randomColor()" />
+      <CategoryCard :background="randomColor()" />
+      <CategoryCard :background="randomColor()" />
     </div>
   </div>
 </template>
@@ -32,8 +39,16 @@ import CategoryCard from '@/components/CategoryCard.vue';
 
 export default {
   setup() {
+    const randomColor = () => {
+      const colors = ['#ff8080', '#00cccc', '#3399ff', '#59b300', '#9966ff', '#e6e600'];
+      const index = Math.floor(Math.random() * 6);
+      return colors[index];
+    }
+
+    randomColor();
+
     return {
-      CategoryCard
+      CategoryCard, randomColor
     }
   }
 };
