@@ -10,7 +10,7 @@
         <input type="email" id="email" placeholder="Add email here...">
         <label for="password">Password</label>
         <input type="password" id="password" placeholder="Add password here...">
-        <button type="submit">Login!</button>
+        <button type="submit">Register!</button>
       </form>
       <img src="https://images.pexels.com/photos/2564463/pexels-photo-2564463.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Login card Image">
     </div>
