@@ -6,7 +6,7 @@
     <h1>All products</h1>
     {{productsError}}
     <div class="product-grid">
-      <ProductCard v-for="product in products" :key="product.id" />
+      <ProductCard v-for="product in products" :key="product.id" :product="product" />
     </div>
   </div>
 </template>

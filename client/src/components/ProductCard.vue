@@ -1,17 +1,21 @@
 <template>
   <div class="product-card">
-    <h3>Product name</h3>
-    <img src="https://via.placeholder.com/200" alt="product image">
+    <h3>{{ product.name }}</h3>
+    <img :src="product.image_url" alt="product image">
     <div class="btns">
       <button class="btn add">Add to cart</button>
-      <router-link class="btn link" to="/product/1">See details</router-link>
+      <router-link class="btn link" :to="`/product/${product.id}`">See details</router-link>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-
+  props: {
+    product: {
+      type: Object
+    }
+  }
 }
 </script>
 
