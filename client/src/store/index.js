@@ -5,10 +5,11 @@ axios.defaults.baseURL = 'http://localhost:3000/api';
 
 export default createStore({
   state: {
+    isLoggedIn: document.cookie.includes('isLoggedIn=true') === true ? true : false,
     products: [],
     productsError: null,
     categories: [],
-    categoriesError: null
+    categoriesError: null,
   },
   mutations: {
     get_products_error(state, msg) {
