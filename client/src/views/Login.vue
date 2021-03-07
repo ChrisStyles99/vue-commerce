@@ -7,10 +7,11 @@
     <div class="login-card">
       <img src="https://images.pexels.com/photos/2304895/pexels-photo-2304895.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Login card Image">
       <form @submit.prevent="login">
+        <p class="error">{{loginError}}</p>
         <label for="email">E-mail</label>
-        <input type="email" id="email" placeholder="Add email here...">
+        <input type="email" id="email" placeholder="Add email here..." v-model="email">
         <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Add password here...">
+        <input type="password" id="password" placeholder="Add password here..." v-model="password">
         <button type="submit">Login!</button>
       </form>
     </div>
@@ -18,14 +19,30 @@
 </template>
 
 <script>
+import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
 export default {
   setup() {
+    const store = useStore();
+    const email = ref('');
+    const password = ref('');
+    const loginError = computed(() => {
+      return store.state.loginError;
+    })
+
     const login = () => {
-      console.log('login');
+      if(email.value === '' || password.value === '') {
+        return
+      }
+      const data = {
+        email: email.value,
+        password: password.value
+      }
+      store.dispatch('login', data);
     }
 
     return {
-      login
+      login, email, password, loginError
     }
   }
 }
@@ -63,6 +80,11 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+
+        .error {
+          color: #b83535;
+          font-size: 1.2rem;
+        }
 
         label {
           font-size: 1.5rem;

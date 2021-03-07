@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios';
+import router from '../router';
 
 axios.defaults.baseURL = 'http://localhost:3000/api';
 
@@ -10,6 +11,7 @@ export default createStore({
     productsError: null,
     categories: [],
     categoriesError: null,
+    loginError: null
   },
   mutations: {
     get_products_error(state, msg) {
@@ -23,6 +25,12 @@ export default createStore({
     },
     get_categories(state, categories) {
       state.categories = categories;
+    },
+    login_error(state, msg) {
+      state.loginError = msg;
+    },
+    login(state) {
+      state.isLoggedIn = true;
     }
   },
   actions: {
@@ -42,6 +50,17 @@ export default createStore({
         commit('get_categories_error', res.data.msg);
       } else {
         commit('get_categories', res.data.categories);
+      }
+    },
+    async login({commit}, data) {
+      const res = await axios.post('/users/login', data);
+      console.log(res);
+
+      if(res.data.error) {
+        commit('login_error', res.data.msg);
+      } else {
+        commit('login');
+        router.push('/');
       }
     }
   },

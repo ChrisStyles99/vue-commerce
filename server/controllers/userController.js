@@ -6,6 +6,11 @@ const jwt = require('jsonwebtoken');
 
 userController.login = (req, res) => {
   const {email, password} = req.body;
+
+  if(email === '' || password === '') {
+    return res.json({error: true, msg: "Email or password can't be empty"});
+  }
+
   connection.query('SELECT * FROM users WHERE email = ?', [email], async(error, result) => {
     if(error) throw error;
 
