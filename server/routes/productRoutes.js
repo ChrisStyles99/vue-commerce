@@ -3,7 +3,7 @@ const { getAll, getSingle, getCategories } = require('../controllers/productCont
 const router = Router();
 
 router.get('/all', getAll);
-router.get('/:id', getSingle);
+router.get('/product/:id', getSingle);
 router.get('/categories', getCategories);
 router.post('/order');
 

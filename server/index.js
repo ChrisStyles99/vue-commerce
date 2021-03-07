@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser(process.env.SECRET));
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:8000'
+  origin: 'http://localhost:8080'
 }));
 
 //Database

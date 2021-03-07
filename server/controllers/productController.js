@@ -30,7 +30,7 @@ productController.getSingle = (req, res) => {
 productController.getCategories = (req, res) => {
   connection.query('SELECT DISTINCT(category) FROM products', (error, results) => {
     if(error) throw error;
-    if(result.length < 1) {
+    if(results.length < 1) {
       return res.json({error: true, msg: 'No products or categories'});
     }
 

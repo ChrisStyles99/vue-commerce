@@ -22,23 +22,29 @@
       </div>
     </div>
     <div class="home-categories">
-      <CategoryCard :background="randomColor()" />
-      <CategoryCard :background="randomColor()" />
-      <CategoryCard :background="randomColor()" />
-      <CategoryCard :background="randomColor()" />
-      <CategoryCard :background="randomColor()" />
-      <CategoryCard :background="randomColor()" />
-      <CategoryCard :background="randomColor()" />
-      <CategoryCard :background="randomColor()" />
+      <CategoryCard v-for="category in categories" :key="category.category" :category="category.category" :background="randomColor()" />
     </div>
   </div>
 </template>
 
 <script>
 import CategoryCard from '@/components/CategoryCard.vue';
+import { useStore } from 'vuex';
+import { computed } from 'vue';
 
 export default {
   setup() {
+    const store = useStore();
+    const categories = computed(() => {
+      return store.state.categories;
+    });
+
+    const getCategories = async() => {
+      await store.dispatch('getCategories');
+    }
+
+    getCategories();
+
     const randomColor = () => {
       const colors = ['#ff8080', '#00cccc', '#3399ff', '#59b300', '#9966ff', '#e6e600'];
       const index = Math.floor(Math.random() * 6);
@@ -48,7 +54,7 @@ export default {
     randomColor();
 
     return {
-      CategoryCard, randomColor
+      CategoryCard, randomColor, categories
     }
   }
 };
