@@ -39,6 +39,10 @@ export default createStore({
   },
   actions: {
     async getProducts({commit}) {
+      if(this.state.products.length > 0) {
+        return
+      }
+
       const res = await axios.get('/products/all');
       
       if(res.data.error) {
@@ -48,6 +52,9 @@ export default createStore({
       }
     },
     async getCategories({commit}) {
+      if(this.state.categories.length > 0) {
+        return
+      }
       const res = await axios.get('/products/categories');
 
       if(res.data.error) {
