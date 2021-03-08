@@ -11,7 +11,8 @@ export default createStore({
     productsError: null,
     categories: [],
     categoriesError: null,
-    loginError: null
+    loginError: null,
+    registerError: null
   },
   mutations: {
     get_products_error(state, msg) {
@@ -31,6 +32,9 @@ export default createStore({
     },
     login(state) {
       state.isLoggedIn = true;
+    },
+    register_error(state, msg) {
+      state.registerError = msg;
     }
   },
   actions: {
@@ -61,6 +65,14 @@ export default createStore({
       } else {
         commit('login');
         router.push('/');
+      }
+    },
+    async register({commit}, data) {
+      const res = await axios.post('/users/register', data);
+      if(res.data.error) {
+        commit('register_error', res.data.msg);
+      } else {
+        router.push('/login');
       }
     }
   },

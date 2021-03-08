@@ -6,12 +6,13 @@
 
     <div class="register-card">
       <form @submit.prevent="register">
+        <p class="error">{{loginError}}</p>
         <label for="name">Name</label>
-        <input type="text" id="name" placeholder="Add name here...">
+        <input type="text" id="name" placeholder="Add name here..." v-model="name">
         <label for="email">E-mail</label>
-        <input type="email" id="email" placeholder="Add email here...">
+        <input type="email" id="email" placeholder="Add email here..." v-model="email">
         <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Add password here...">
+        <input type="password" id="password" placeholder="Add password here..." v-model="password">
         <button type="submit">Register!</button>
       </form>
       <img src="https://images.pexels.com/photos/2564463/pexels-photo-2564463.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Login card Image">
@@ -20,14 +21,33 @@
 </template>
 
 <script>
+import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
 export default {
   setup() {
+    const store = useStore();
+    const name = ref('');
+    const email = ref('');
+    const password = ref('');
+    const loginError = computed(() => {
+      return store.state.registerError;
+    });
+
     const register = () => {
-      console.log('login');
+      if(name.value === '' || email.value === '' || password.value === '') {
+        return
+      }
+      const data = {
+        name: name.value,
+        email: email.value,
+        password: password.value
+      };
+
+      store.dispatch('register', data);
     }
 
     return {
-      register
+      register, name, email, password, loginError
     }
   }
 }
@@ -65,6 +85,11 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: center;
+
+        .error {
+          color: #b83535;
+          font-size: 1.2rem;
+        }
 
         label {
           font-size: 1.5rem;
