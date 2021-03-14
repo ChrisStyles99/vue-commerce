@@ -9,6 +9,8 @@ export default createStore({
     isLoggedIn: document.cookie.includes('isLoggedIn=true') === true ? true : false,
     products: [],
     productsError: null,
+    product: {},
+    productError: null,
     categories: [],
     categoriesError: null,
     loginError: null,
@@ -20,6 +22,12 @@ export default createStore({
     },
     get_products(state, products) {
       state.products = products;
+    },
+    get_product_error(state, msg) {
+      state.productError = msg;
+    },
+    get_product(state, product) {
+      state.product = product;
     },
     get_categories_error(state, msg) {
       state.categoriesError = msg;
@@ -49,6 +57,15 @@ export default createStore({
         commit('get_products_error', res.data.msg);
       } else {
         commit('get_products', res.data.products);
+      }
+    },
+    async getSingle({commit}, id) { 
+      const res = await axios.get(`/products/product/${id}`);
+
+      if(res.data.error) {
+        commit('get_product_error', res.data.msg);
+      } else {
+        commit('get_product', res.data.product);
       }
     },
     async getCategories({commit}) {

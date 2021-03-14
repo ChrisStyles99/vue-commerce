@@ -1,12 +1,13 @@
 <template>
   <div class="product">
-    <img src="https://via.placeholder.com/500" alt="Image">
+    <img :src="product.image_url" alt="Image">
     <div class="product-info">
-      <h1>Product name</h1>
-      <h2>Price: $500</h2>
+      <h1>{{product.name}}</h1>
+      <h2>Price: {{product.price}}</h2>
       <p>Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis inventore nulla explicabo corrupti libero quia velit repellendus voluptas nisi tenetur alias ut veniam nihil natus temporibus expedita sunt, commodi culpa.</p>
+      <p>Category: {{product.category}}</p>
       <div class="buttons">
-        <input type="number" max="99" min="1">
+        <input type="number" max="99" min="1" v-model="itemNumber">
         <button>Add to cart</button>
       </div>
     </div>
@@ -14,8 +15,29 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
+import { computed, ref } from 'vue';
 export default {
+  setup() {
+    const store = useStore();
+    const route = useRoute();
+    const id = route.params.id;
+    const itemNumber = ref(1);
+    const product = computed(() => {
+      return store.state.product;
+    });
 
+    const getProduct = () => {
+      store.dispatch('getSingle', id);
+    }
+    getProduct();
+    console.log(product.value);
+
+    return {
+      product, itemNumber
+    }
+  }
 }
 </script>
 
@@ -29,6 +51,7 @@ export default {
 
     img {
       margin: auto;
+      width: 400px;
     }
 
     .product-info {
