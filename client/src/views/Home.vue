@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="home-categories">
-      <CategoryCard v-for="category in categories" :key="category.category" :category="category.category" :background="randomColor()" />
+      <CategoryCard v-for="category in categories" :key="category.category" :category="category.category" :background="randomColor()" @click="searchByCategory(category.category)"/>
     </div>
   </div>
 </template>
@@ -31,16 +31,23 @@
 import CategoryCard from '@/components/CategoryCard.vue';
 import { useStore } from 'vuex';
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
     const store = useStore();
+    const router = useRouter();
     const categories = computed(() => {
       return store.state.categories;
     });
 
     const getCategories = async() => {
       await store.dispatch('getCategories');
+    }
+
+    const searchByCategory = (category) => {
+      category = category.replace(/\s+/, '-');
+      router.push(`/products/search/${category}`)
     }
 
     getCategories();
@@ -54,7 +61,7 @@ export default {
     randomColor();
 
     return {
-      CategoryCard, randomColor, categories
+      CategoryCard, randomColor, categories, searchByCategory
     }
   }
 };

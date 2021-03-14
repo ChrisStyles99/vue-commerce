@@ -27,6 +27,20 @@ productController.getSingle = (req, res) => {
   });
 }
 
+productController.getProductsByCategory = (req, res) => {
+  let {category} = req.params;
+  category = category.replace(/-/g, ' ');
+  connection.query('SELECT * FROM products WHERE category = ?', [category], (error, results) => {
+    if(error) throw error;
+
+    if(results.length < 1) {
+      res.json({error: true, msg: 'No products with that category'});
+    } else {
+      res.json({error: false, products: results});
+    }
+  })
+}
+
 productController.getCategories = (req, res) => {
   connection.query('SELECT DISTINCT(category) FROM products', (error, results) => {
     if(error) throw error;
