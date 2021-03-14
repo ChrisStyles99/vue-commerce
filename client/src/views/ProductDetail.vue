@@ -3,7 +3,7 @@
     <img :src="product.image_url" alt="Image">
     <div class="product-info">
       <h1>{{product.name}}</h1>
-      <h2>Price: {{product.price}}</h2>
+      <h2>Price: ${{product.price}}</h2>
       <p>Description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis inventore nulla explicabo corrupti libero quia velit repellendus voluptas nisi tenetur alias ut veniam nihil natus temporibus expedita sunt, commodi culpa.</p>
       <p>Category: {{product.category}}</p>
       <div class="buttons">

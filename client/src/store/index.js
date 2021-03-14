@@ -100,6 +100,9 @@ export default createStore({
       }
     }
   },
+  getters: {
+    products: state => state.products
+  },
   modules: {
   }
 })

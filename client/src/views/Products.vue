@@ -19,14 +19,13 @@ export default {
   setup() {
     const store = useStore();
     const products = computed(() => {
-      return store.state.products;
+      return store.getters.products;
     });
     const productsError = computed(() => {
       return store.state.productsError
     });
 
     const getProducts = async() => await store.dispatch('getProducts');
-
     getProducts();
     
     return {
