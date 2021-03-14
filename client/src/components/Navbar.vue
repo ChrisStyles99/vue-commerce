@@ -3,16 +3,28 @@
     <h1 class="logo"><router-link class="logo-link" to="/">E-commerce</router-link></h1>
     <ul class="nav-list">
       <li class="nav-link"><router-link class="link-ref" to="/products">Products</router-link></li>
-      <li class="nav-link"><router-link class="link-ref" to="/cart">Cart</router-link></li>
-      <li class="nav-link"><router-link class="link-ref" to="/login">Login</router-link></li>
-      <li class="nav-link"><router-link class="link-ref" to="/register">Register</router-link></li>
+      <li class="nav-link"><router-link class="link-ref" to="/cart" v-if="isLoggedIn">Cart</router-link></li>
+      <li class="nav-link"><router-link class="link-ref" to="/login" v-if="!isLoggedIn">Login</router-link></li>
+      <li class="nav-link"><router-link class="link-ref" to="/register" v-if="!isLoggedIn">Register</router-link></li>
     </ul>
   </nav>
 </template>
 
 <script>
-export default {
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
+export default {
+  setup() {
+    const store = useStore();
+    const isLoggedIn = computed(() => {
+      return store.state.isLoggedIn;
+    });
+
+    return {
+      isLoggedIn
+    }
+  }
 }
 </script>
 
