@@ -15,7 +15,9 @@ export default createStore({
     categories: [],
     categoriesError: null,
     loginError: null,
-    registerError: null
+    registerError: null,
+    user: {},
+    userError: null
   },
   mutations: {
     get_products_error(state, msg) {
@@ -50,6 +52,12 @@ export default createStore({
     },
     get_products_category(state, products) {
       state.filteredProducts = products;
+    },
+    get_profile_error(state, msg) {
+      state.userError = msg;
+    },
+    get_profile(state, user) {
+      state.user = user;
     }
   },
   actions: {
@@ -113,6 +121,14 @@ export default createStore({
         commit('get_products_category_error', res.data.msg);
       } else {
         commit('get_products_category', res.data.products);
+      }
+    },
+    async getProfile({commit}) {
+      const res = await axios.get('/users/profile', { withCredentials: true });
+      if(res.data.error) {
+        commit('get_profile_error', res.data.msg);
+      } else {
+        commit('get_profile', res.data.user);
       }
     }
   },

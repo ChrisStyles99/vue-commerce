@@ -4,6 +4,17 @@ const connection = dbConnection();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+userController.getUser = (req, res) => {
+  connection.query('SELECT id, name, email FROM users WHERE id = ?', [req.user], (error, result) => {
+    if(error) throw error;
+
+    if(result.length < 1) {
+      return res.json({error: true, msg: 'No user with that id'});
+    }
+    res.json({error: false, user: result[0]});
+  })
+}
+
 userController.login = (req, res) => {
   const {email, password} = req.body;
 
