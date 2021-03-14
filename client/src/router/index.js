@@ -51,6 +51,14 @@ const routes = [
     path: '/products/search/:category',
     name: 'Search',
     component: () => import(/* webpackChunkName: "search" */ '../views/Search.vue')
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue'),
+    meta: {
+      requiresAuth: true
+    }
   }
 ];
 

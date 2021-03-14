@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import axios from 'axios';
 import router from '../router';
 axios.defaults.baseURL = 'http://localhost:3000/api';
+axios.defaults.withCredentials = true;
 
 export default createStore({
   state: {
@@ -97,7 +98,6 @@ export default createStore({
     },
     async login({commit}, data) {
       const res = await axios.post('/users/login', data);
-      console.log(res);
 
       if(res.data.error) {
         commit('login_error', res.data.msg);
@@ -124,7 +124,8 @@ export default createStore({
       }
     },
     async getProfile({commit}) {
-      const res = await axios.get('/users/profile', { withCredentials: true });
+      const res = await axios.get('/users/profile');
+      console.log(res.data);
       if(res.data.error) {
         commit('get_profile_error', res.data.msg);
       } else {
