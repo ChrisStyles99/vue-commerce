@@ -14,6 +14,9 @@
         <h3>Total</h3>
         <h3>${{cartTotal}}</h3>
       </div>
+      <div class="cart-btns">
+        <button @click="removeAll()">Remove all products</button>
+      </div>
     </div>
   </div>
 </template>
@@ -31,10 +34,13 @@ export default {
     });
     const cartTotal = computed(() => {
       return store.getters.cartItemsTotal;
-    })
+    });
+    const removeAll = () => {
+      store.commit('remove_all');
+    }
 
     return {
-      CartItem, cartItems, cartTotal
+      CartItem, cartItems, cartTotal, removeAll
     }
   }
 }
@@ -61,6 +67,18 @@ export default {
       .cart-total {
         display: flex;
         justify-content: space-between;
+      }
+
+      .cart-btns {
+        button {
+          background-color: #df3e3e;
+          font-size: 1.2rem;
+          border: none;
+          border-radius: 12px;
+          padding: 10px;
+          cursor: pointer;
+          color: #fff;
+        }
       }
     }
   }

@@ -82,10 +82,19 @@ export default createStore({
     },
     remove_one(state, product) {
       let item = state.cartItems.find(i => i.id === product.id);
+      
       if(item) {
+        if(product.quantity <= 1) {
+          state.cartItems = state.cartItems.filter(item => {
+            return item.id !== product.id;
+          })
+        }
         item.quantity--;
       }
       updateLocalStorage(state.cartItems);
+    },
+    remove_all(state) {
+      state.cartItems = [];
     }
   },
   actions: {
