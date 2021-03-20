@@ -69,11 +69,22 @@ export default createStore({
       let item = state.cartItems.find(i => i.id === product.id);
 
       if(item) {
-        item.quantity++
+        if(product.quantity > 1) {
+          item.quantity += product.quantity;
+        } else {
+          item.quantity++
+        }
       } else {
         state.cartItems.push(product);
       }
 
+      updateLocalStorage(state.cartItems);
+    },
+    remove_one(state, product) {
+      let item = state.cartItems.find(i => i.id === product.id);
+      if(item) {
+        item.quantity--;
+      }
       updateLocalStorage(state.cartItems);
     }
   },
@@ -151,13 +162,13 @@ export default createStore({
   },
   getters: {
     products: state => state.products,
-    productQuantity: state => product => {
-      const item = state.cartItems.find(i => i.id === product.id);
-      if(item) {
-        return item.quantity;
-      } else {
-        return null;
-      }
+    cartItemsCount: state => state.cartItems.length,
+    cartItemsTotal: state => {
+      let total = 0;
+      state.cartItems.forEach(item => {
+        total += item.price * item.quantity;
+      });
+      return total;
     }
   },
   modules: {

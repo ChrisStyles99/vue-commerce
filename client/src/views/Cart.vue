@@ -12,7 +12,7 @@
       <hr>
       <div class="cart-total">
         <h3>Total</h3>
-        <h3>$10000</h3>
+        <h3>${{cartTotal}}</h3>
       </div>
     </div>
   </div>
@@ -28,10 +28,13 @@ export default {
     const store = useStore();
     const cartItems = computed(() => {
       return store.state.cartItems;
+    });
+    const cartTotal = computed(() => {
+      return store.getters.cartItemsTotal;
     })
 
     return {
-      CartItem, cartItems
+      CartItem, cartItems, cartTotal
     }
   }
 }

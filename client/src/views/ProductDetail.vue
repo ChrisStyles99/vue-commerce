@@ -8,7 +8,7 @@
       <p>Category: {{product.category}}</p>
       <div class="buttons">
         <input type="number" max="99" min="1" v-model="itemNumber">
-        <button>Add to cart</button>
+        <button @click="addToCart()">Add to cart</button>
       </div>
     </div>
   </div>
@@ -32,10 +32,13 @@ export default {
       store.dispatch('getSingle', id);
     }
     getProduct();
-    console.log(product.value);
+    
+    const addToCart = () => {
+      store.commit('add_to_cart', {...product.value, quantity: parseInt(itemNumber.value)});
+    }
 
     return {
-      product, itemNumber
+      product, itemNumber, addToCart
     }
   }
 }

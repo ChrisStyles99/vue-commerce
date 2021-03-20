@@ -2,19 +2,32 @@
   <div class="cart-item">
     <h3>{{product.name}}</h3>
     <div class="buttons">
-      <button>+</button>
+      <button @click="addOne()">+</button>
       <p>{{product.quantity}}</p>
-      <button>-</button>
+      <button @click="removeOne()">-</button>
     </div>
     <h4>{{product.price}}</h4>
   </div>
 </template>
 
 <script>
+import { useStore } from 'vuex';
 export default {
   props: {
     product: {
       type: Object
+    }
+  },
+  setup(props) {
+    const store = useStore();
+    const addOne = () => {
+      store.commit('add_to_cart', {...props.product, quantity: 1});
+    }
+    const removeOne = () => {
+      store.commit('remove_one', {...props.product});
+    }
+    return {
+      addOne, removeOne
     }
   }
 }

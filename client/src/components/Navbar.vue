@@ -3,7 +3,7 @@
     <h1 class="logo"><router-link class="logo-link" to="/">E-commerce</router-link></h1>
     <ul class="nav-list">
       <li class="nav-link"><router-link class="link-ref" to="/products">Products</router-link></li>
-      <li class="nav-link"><router-link class="link-ref" to="/cart" v-if="isLoggedIn">Cart</router-link></li>
+      <li class="nav-link"><router-link class="link-ref" to="/cart" v-if="isLoggedIn">Cart - {{cartItemsCount}}</router-link></li>
       <li class="nav-link"><router-link class="link-ref" to="/profile" v-if="isLoggedIn">Profile</router-link></li>
       <li class="nav-link"><router-link class="link-ref" to="/login" v-if="!isLoggedIn">Login</router-link></li>
       <li class="nav-link"><router-link class="link-ref" to="/register" v-if="!isLoggedIn">Register</router-link></li>
@@ -21,9 +21,12 @@ export default {
     const isLoggedIn = computed(() => {
       return store.state.isLoggedIn;
     });
+    const cartItemsCount = computed(() => {
+      return store.getters.cartItemsCount;
+    })
 
     return {
-      isLoggedIn
+      isLoggedIn, cartItemsCount
     }
   }
 }
