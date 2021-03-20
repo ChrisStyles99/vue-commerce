@@ -3,17 +3,28 @@
     <h3>{{ product.name }}</h3>
     <img :src="product.image_url" alt="product image">
     <div class="btns">
-      <button class="btn add">Add to cart</button>
+      <button class="btn add" @click="addToCart()">Add to cart</button>
       <router-link class="btn link" :to="`/product/${product.id}`">See details</router-link>
     </div>
   </div>
 </template>
 
 <script>
+import { useStore } from 'vuex'
 export default {
   props: {
     product: {
       type: Object
+    }
+  },
+  setup(props) {
+    const store = useStore();
+    const addToCart = () => {
+      store.commit('add_to_cart', {...props.product, quantity: 1});
+    }
+
+    return {
+      addToCart
     }
   }
 }

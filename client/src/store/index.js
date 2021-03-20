@@ -4,6 +4,10 @@ import router from '../router';
 axios.defaults.baseURL = 'http://localhost:3000/api';
 axios.defaults.withCredentials = true;
 
+function updateLocalStorage(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
 export default createStore({
   state: {
     isLoggedIn: document.cookie.includes('isLoggedIn=true') === true ? true : false,
@@ -18,7 +22,8 @@ export default createStore({
     loginError: null,
     registerError: null,
     user: {},
-    userError: null
+    userError: null,
+    cartItems: JSON.parse(localStorage.getItem('cart')) || []
   },
   mutations: {
     get_products_error(state, msg) {
@@ -59,6 +64,17 @@ export default createStore({
     },
     get_profile(state, user) {
       state.user = user;
+    },
+    add_to_cart(state, product) {
+      let item = state.cartItems.find(i => i.id === product.id);
+
+      if(item) {
+        item.quantity++
+      } else {
+        state.cartItems.push(product);
+      }
+
+      updateLocalStorage(state.cartItems);
     }
   },
   actions: {
@@ -134,7 +150,15 @@ export default createStore({
     }
   },
   getters: {
-    products: state => state.products
+    products: state => state.products,
+    productQuantity: state => product => {
+      const item = state.cartItems.find(i => i.id === product.id);
+      if(item) {
+        return item.quantity;
+      } else {
+        return null;
+      }
+    }
   },
   modules: {
   }

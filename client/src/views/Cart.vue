@@ -8,13 +8,7 @@
         <h2>Cost</h2>
       </div>
       <hr>
-      <CartItem />
-      <CartItem />
-      <CartItem />
-      <CartItem />
-      <CartItem />
-      <CartItem />
-      <CartItem />
+      <CartItem v-for="item in cartItems" :key="item.id" :product="item" />
       <hr>
       <div class="cart-total">
         <h3>Total</h3>
@@ -26,10 +20,18 @@
 
 <script>
 import CartItem from '@/components/CartItem.vue'
+import { useStore } from 'vuex'
+import { computed } from 'vue';
+
 export default {
   setup() {
+    const store = useStore();
+    const cartItems = computed(() => {
+      return store.state.cartItems;
+    })
+
     return {
-      CartItem
+      CartItem, cartItems
     }
   }
 }

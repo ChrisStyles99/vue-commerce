@@ -1,18 +1,22 @@
 <template>
   <div class="cart-item">
-    <h3>Product name</h3>
+    <h3>{{product.name}}</h3>
     <div class="buttons">
       <button>+</button>
-      <p>4</p>
+      <p>{{product.quantity}}</p>
       <button>-</button>
     </div>
-    <h4>$1000</h4>
+    <h4>{{product.price}}</h4>
   </div>
 </template>
 
 <script>
 export default {
-  
+  props: {
+    product: {
+      type: Object
+    }
+  }
 }
 </script>
 
