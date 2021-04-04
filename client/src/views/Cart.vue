@@ -16,6 +16,7 @@
       </div>
       <div class="cart-btns">
         <button @click="removeAll()">Remove all products</button>
+        <button>Pay the order</button>
       </div>
     </div>
   </div>
@@ -60,8 +61,12 @@ export default {
       padding: 10px;
 
       .cart-info {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+
+        h2 {
+          margin: auto;
+        }
       }
 
       .cart-total {
@@ -70,6 +75,9 @@ export default {
       }
 
       .cart-btns {
+        display: flex;
+        justify-content: space-between;
+
         button {
           background-color: #df3e3e;
           font-size: 1.2rem;
@@ -78,6 +86,10 @@ export default {
           padding: 10px;
           cursor: pointer;
           color: #fff;
+
+          &:last-child {
+            background-color: $secondary;
+          }
         }
       }
     }

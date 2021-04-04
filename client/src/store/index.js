@@ -161,7 +161,6 @@ export default createStore({
     },
     async getProfile({commit}) {
       const res = await axios.get('/users/profile');
-      console.log(res.data);
       if(res.data.error) {
         commit('get_profile_error', res.data.msg);
       } else {

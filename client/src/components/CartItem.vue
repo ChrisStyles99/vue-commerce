@@ -6,11 +6,12 @@
       <p>{{product.quantity}}</p>
       <button @click="removeOne()">-</button>
     </div>
-    <h4>{{product.price}}</h4>
+    <h4>{{ productTotal }}</h4>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 export default {
   props: {
@@ -26,8 +27,13 @@ export default {
     const removeOne = () => {
       store.commit('remove_one', {...props.product});
     }
+
+    const productTotal = computed(() => {
+      return props.product.price * props.product.quantity;
+    });
+
     return {
-      addOne, removeOne
+      addOne, removeOne, productTotal
     }
   }
 }
@@ -35,11 +41,12 @@ export default {
 
 <style lang="scss" scoped>
   .cart-item {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
     margin: 10px 0;
 
     .buttons {
+      margin: auto;
       display: flex;
       align-items: center;
 
@@ -63,6 +70,10 @@ export default {
           background-color: #df3e3e;
         }
       }
+    }
+
+    h4 {
+      margin: auto;
     }
   }
 </style>

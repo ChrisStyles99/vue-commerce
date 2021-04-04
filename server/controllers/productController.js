@@ -52,8 +52,8 @@ productController.getCategories = (req, res) => {
   });
 }
 
-// productController.makeOrder = (req, res) => {
+productController.makeOrder = (req, res) => {
   
-// }
+}
 
 module.exports = productController;
