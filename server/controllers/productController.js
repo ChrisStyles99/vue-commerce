@@ -53,7 +53,20 @@ productController.getCategories = (req, res) => {
 }
 
 productController.makeOrder = (req, res) => {
-  
+  const {products, totalPrice, totalItems} = req.body;
+
+  let values = [];
+  connection.query('INSERT INTO orders (user_id, total_price, total_items) VALUES (?, ?, ?)', [req.user, totalPrice, totalItems], (error, result) => {
+    if(error) throw error;
+    products.forEach(product => {
+      values.push([result.insertId, product.id, product.quantity]);
+    });
+    connection.query('INSERT INTO orders_products (order_id, product_id, quantity) VALUES ?', [values], (error) => {
+      if(error) throw error;
+
+      res.json({error: false, msg: 'Order made :D'});
+    })
+  });
 }
 
 module.exports = productController;

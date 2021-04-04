@@ -16,7 +16,7 @@
       </div>
       <div class="cart-btns">
         <button @click="removeAll()">Remove all products</button>
-        <button>Pay the order</button>
+        <button @click="makeOrder()">Pay the order</button>
       </div>
     </div>
   </div>
@@ -26,10 +26,12 @@
 import CartItem from '@/components/CartItem.vue'
 import { useStore } from 'vuex'
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
     const store = useStore();
+    const router = useRouter();
     const cartItems = computed(() => {
       return store.state.cartItems;
     });
@@ -40,8 +42,20 @@ export default {
       store.commit('remove_all');
     }
 
+    const makeOrder = () => {
+      console.log(store.state.cartItems);
+      const data = {
+        products: store.state.cartItems,
+        totalPrice: store.getters.cartItemsTotal,
+        totalItems: store.getters.cartItemsTotalQuantity
+      };
+
+      store.dispatch('makeOrder', data);
+      router.push('/profile');
+    }
+
     return {
-      CartItem, cartItems, cartTotal, removeAll
+      CartItem, cartItems, cartTotal, removeAll, makeOrder
     }
   }
 }

@@ -23,7 +23,9 @@ export default createStore({
     registerError: null,
     user: {},
     userError: null,
-    cartItems: JSON.parse(localStorage.getItem('cart')) || []
+    cartItems: JSON.parse(localStorage.getItem('cart')) || [],
+    orderError: null,
+    orderMsg: null
   },
   mutations: {
     get_products_error(state, msg) {
@@ -95,6 +97,12 @@ export default createStore({
     },
     remove_all(state) {
       state.cartItems = [];
+    },
+    make_order_error(state, msg) {
+      state.orderError = msg;
+    },
+    make_order(state, msg) {
+      state.orderMsg = msg;
     }
   },
   actions: {
@@ -166,6 +174,14 @@ export default createStore({
       } else {
         commit('get_profile', res.data.user);
       }
+    },
+    async makeOrder({commit}, data) {
+      const res = await axios.post('/products/order', data);
+      if(res.data.error) {
+        commit('make_order_error', res.data.msg)
+      } else {
+        commit('make_order', 'Thank you for your order :D');
+      }
     }
   },
   getters: {
@@ -177,6 +193,13 @@ export default createStore({
         total += item.price * item.quantity;
       });
       return total;
+    },
+    cartItemsTotalQuantity: state => {
+      let quantity = 0;
+      state.cartItems.forEach(item => {
+        quantity += item.quantity + quantity;
+      });
+      return quantity;
     }
   },
   modules: {
