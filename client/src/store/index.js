@@ -25,7 +25,9 @@ export default createStore({
     userError: null,
     cartItems: JSON.parse(localStorage.getItem('cart')) || [],
     orderError: null,
-    orderMsg: null
+    orderMsg: null,
+    ordersError: null,
+    orders: []
   },
   mutations: {
     get_products_error(state, msg) {
@@ -103,6 +105,12 @@ export default createStore({
     },
     make_order(state, msg) {
       state.orderMsg = msg;
+    },
+    get_orders_error(state, msg) {
+      state.ordersError = msg;
+    },
+    get_orders(state, result) {
+      state.orders = result;
     }
   },
   actions: {
@@ -181,6 +189,14 @@ export default createStore({
         commit('make_order_error', res.data.msg)
       } else {
         commit('make_order', 'Thank you for your order :D');
+      }
+    },
+    async getProfileOrders({commit}) {
+      const res = await axios.get('/products/profile-orders');
+      if(res.data.error) {
+        commit('get_orders_error', res.data.msg);
+      } else {
+        commit('get_orders', res.data.orders);
       }
     }
   },

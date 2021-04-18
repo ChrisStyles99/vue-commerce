@@ -69,4 +69,14 @@ productController.makeOrder = (req, res) => {
   });
 }
 
+productController.getProfileOrders = (req, res) => {
+  connection.query('SELECT o.id AS order_id, o.total_price, o.total_items, op.quantity, p.id AS product_id, p.name, p.price, p.category, p.image_url FROM orders AS o LEFT JOIN orders_products AS op ON o.id = op.order_id LEFT JOIN products AS p ON op.product_id = p.id WHERE user_id = ?', [req.user], (error, result) => {
+    if(error) throw error;
+    if(result.length < 1) {
+      return res.json({error: true, msg: 'No orders made with this profile'});
+    }
+    res.json({error: false, orders: result});
+  });
+}
+
 module.exports = productController;
